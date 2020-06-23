@@ -18,9 +18,7 @@ $(document).ready(function() {
 });
 
 
-// FUNCTIONS
-
-
+// We define functions here
 
 function citySearch(city) {
 	// clear out previous city data in our 'system' (console??)
@@ -173,15 +171,15 @@ function renderButtons() {
 
 function fiveDay(city) {
 	var fiveFront = "https://api.openweathermap.org/data/2.5/forecast?q=";
-	var fiveURL = fiveFront + city + APIKey;
-	console.log(fiveURL);
+	var URLFiveDays = fiveFront + city + APIKey;
+	console.log(URLFiveDays);
 
 	//clear out previous data
 	$(".card-text").empty();
 	$(".card-title").empty();
 
 	$.ajax({
-		url: fiveURL,
+		url: URLFiveDays,
 		method: "GET"
 	}).then(function(response) {
 		//dates
@@ -359,7 +357,7 @@ function fiveDay(city) {
 
 function tempAvg(x, y, z) {
 	var avgThree = (x + y + z) / 3.0;
-	var avgReturn = ((avgThree - 273.15) * 1.8 + 32).toFixed(0);
+	var avgReturn = ((avgThree - 273.15) ).toFixed(0);
 	return avgReturn;
 }
 
@@ -398,13 +396,13 @@ $("#add-city").on("click", function(event) {
 	// add to local storage
 	localStorage.setItem("cities", JSON.stringify(citiesArray));
 
-	//give city info to five day forecast cards as well
+	//give 5 day forecast
 	fiveDay(city);
 
 	// search for the city
 	citySearch(city);
 
-	// then setting up a button that is created for each city searched for
+	// rendering
 	renderButtons();
 });
 
